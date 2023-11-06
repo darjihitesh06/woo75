@@ -27,9 +27,17 @@ class WC_Meta_Box_Order_Actions {
 	 */
 	public static function output( $post ) {
 		global $theorder;
-
+		error_log('ORDER OBJE 11: '.print_r($theorder,true));
 		OrderUtil::init_theorder_object( $post );
 		$order = $theorder;
+		error_log('ORDER OBJE: '.print_r($order,true));
+		if ( $post instanceof WC_Order ) {
+			$order_id = $post->get_id();
+		} else {
+			$order_id = $post->ID;
+		}
+
+		$args = array( 'order_id' => $order_id );
 
 		$order_id      = $order->get_id();
 		$order_actions = self::get_available_order_actions_for_order( $order );
